@@ -1,6 +1,6 @@
 import re
 class Coverter(object):
-    MIGRATION_LIB = "import DB\nfrom ValuesType import *\n"
+    MIGRATION_LIB = "import DB\nfrom ValuesType import *\nfrom Model import *\n"
     TAB = "\t"
     def __init__(self):
         print("=======================================")

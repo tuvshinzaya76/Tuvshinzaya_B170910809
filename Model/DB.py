@@ -8,5 +8,8 @@ def createTable(name,fields):
         if field[1].foreign_key:
             query += "" + field[1].getForeignKeyQuery(field[0]) + "\n"
     query += " ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=56 ;"
+    # for field in fields:
+    #     if field[1].db_index:
+    #         query+="\n "+field[1].getIndexQuery(field[0])
     print(query)
     return True
