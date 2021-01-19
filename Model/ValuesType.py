@@ -9,6 +9,9 @@ class Field(object):
     foreign_key = False
     db_index = False
     related_name = ""
+    unique = False
+    many_to_many = False
+    db_table = None
     obj = None
     def __init__(self,obj = None,**args):
         if bool(obj):
@@ -26,6 +29,10 @@ class Field(object):
                 self.db_index = value
             elif key == 'related_name':
                 self.related_name = value
+            elif key == 'unique':
+                self.unique = value
+            elif key == 'db_table':
+                self.db_table = value
 
     def getQuery(self):
         query = self.f_type+"("+str(self.max_length)+")"
@@ -42,9 +49,14 @@ class Field(object):
         if self.primary_key:
             query += "PRIMARY KEY("+str(att_name)+"),"
         return query
+    def getUnique(self,att_name):
+        query = ""
+        if self.unique:
+            query +=  "UNIQUE("+str(att_name)+"),"
+        return query
     def getIndexQuery(self,att_name):
         query = "CREATE INDEX '"
-        query += "idx_"+str(att_name)+"' ON "+str(self.__class__.__name__)+"("+str(att_name)+")"
+        query += "idx_"+str(att_name)+"' ON "+str(self.__class__.__name__)+"("+str(att_name)+");"
         return query
 class CharField(Field):
     f_type = "VARCHAR"
@@ -60,6 +72,18 @@ class ForeignKey(Field):
     def getForeignKeyQuery(self,att_name):
         query = "FOREIGN KEY ('"+str(att_name)+"') REFERENCES Persons('"+str(att_name)+"'), "
         return query
+class DateField(Field):
+    f_type = "DATE"
+
+class DateTimeField(Field):
+    f_type = "DATETIME"
+
+class ManyToManyField(Field):
+    many_to_many = True
+    obj = None
+    def getQuery(self):
+        return ""
+
 
 class Model(object):
     def getClassName(self):
