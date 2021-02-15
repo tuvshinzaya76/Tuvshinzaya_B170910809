@@ -4,7 +4,6 @@ def createTable(name,fields):
         if field[1].many_to_many:
             continue
         query+="'"+field[0]+"' "+field[1].getQuery()+"\n"
-    # CONSTRAINTS
     for field in fields:
         if field[1].primary_key:
             query += "" + field[1].getPrimaryKey(field[0]) + "\n"
