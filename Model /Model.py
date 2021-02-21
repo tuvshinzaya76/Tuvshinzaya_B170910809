@@ -14,4 +14,3 @@ class Chat(Model):
     bg_color = ForeignKey(Color,related_name="bgColor",default=0)
     state = IntegerField()
     type = ForeignKey(ChatType,related_name="typeId",default=0)
-

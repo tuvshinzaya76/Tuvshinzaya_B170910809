@@ -86,6 +86,9 @@ class ManyToManyField(Field):
 
 
 class Model(object):
+    # PARENT_CLASS = "Model"
+    def getClassType(self):
+        return "Model"
     def getClassName(self):
         return self.__class__.__name__
     def findPrimaryKey(self):
